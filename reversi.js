@@ -431,7 +431,15 @@ GameState.prototype.moveLeftFor = function(color) {
     Return the number of pieces of color on the board
  */
 GameState.prototype.count = function( color ) {
-    return this.squares.filter(function(s){ return s.piece == color }).length;
+    var num = 0;
+    for(var i=0; i<this.squares.length; i++) {
+        num += this.squares[i].piece == color ? 1 : 0;
+    }    
+    return num;        
+    
+//  So I actually like code like below more, but it's just reaaaaaaaallllyyyy slow
+//  and since count() is called so many times when minmax-ing I'm going with the for-loop    
+//  return this.squares.filter(function(s){ return s.piece == color }).length;
 }
 
 // feedback that something is going on
