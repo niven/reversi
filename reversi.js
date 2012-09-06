@@ -29,7 +29,7 @@ function start(generation) {
 
     state = new GameState();
    // console.log(state.dot());
-    computer = new AI( generation );
+    computer = new AI( generation, piece.light );
 
     var scale = 5/6;
    	var canvas = document.getElementById("board");
@@ -67,20 +67,20 @@ function processClick( clickEvent ) {
     }
 		  
     state.playerTurn = false;
-  
+
 	var canvasX = clickEvent.clientX - this.offsetLeft;
 	var canvasY = clickEvent.clientY - this.offsetTop;
 	
 	var x = Math.floor( canvasX / (this.width / size) );
 	var y = Math.floor( canvasY / (this.height / size) );
 	
-	if( state.isLegalMove(x, y, state.playerPiece) ) {
-	   state.play(x, y, state.playerPiece);
+	if( state.isLegalMove(x, y, other(computer.piece) ) ) {
+	   state.play(x, y, other(computer.piece));
 	   board.paint();
 	   vlog();
 	   
-	   var AICanMove = state.moveLeftFor(state.AIPiece);
-	   if( !AICanMove && !state.moveLeftFor(state.playerPiece)  ) { // field full or no more legal moves
+	   var AICanMove = state.moveLeftFor(computer.piece);
+	   if( !AICanMove && !state.moveLeftFor( other(computer.piece) )  ) { // field full or no more legal moves
 	       doResult();
 	   } else if( !AICanMove ) {
 	   	log("AI can't move, passing to you");
@@ -137,11 +137,11 @@ function vlog() {
  */
 function doAI() {
 		var move = computer.makeMove();
-		state.play(move.x, move.y, state.AIPiece);
+		state.play(move.x, move.y, computer.piece);
 	   	board.paint();
 	   	vlog();
-	   	var playerCanMove = state.moveLeftFor(state.playerPiece);
-	   	if( !playerCanMove && !state.moveLeftFor(state.AIPiece) ) {
+	   	var playerCanMove = state.moveLeftFor( other(computer.piece) );
+	   	if( !playerCanMove && !state.moveLeftFor( computer.piece ) ) {
 	   		doResult();
 	   	} else if( !playerCanMove ){
 	   		log("No move possible for you");
@@ -248,9 +248,6 @@ function GameState() {
     this.squares[4*size + 4].piece = piece.light;
     this.squares[3*size + 4].piece = piece.dark;
     this.squares[4*size + 3].piece = piece.dark;
-    
-    this.playerPiece = piece.dark;
-    this.AIPiece = piece.light;
     
     this.playerTurn = true;
     
@@ -446,9 +443,10 @@ GameState.prototype.count = function( color ) {
 var banter = ["Thinking cold, unhuman thoughts. . .", "Reticulating splines. . .", "Optimizing vertices. . .", "Flipping bits. . . "];
 var strats = [];
 var strategy_description = [];
-function AI( generation ) {
+function AI( generation, piece ) {
     
     this.generation = generation;
+    this.piece = piece;
     
 }
 
@@ -456,7 +454,7 @@ AI.prototype.makeMove = function() {
 
 	log(banter[Math.floor(Math.random()*banter.length)]);
 
-	return strats[ this.generation ]( state );
+	return strats[ this.generation ]( state, this.piece );
 
 	console.log("AI moved");
 

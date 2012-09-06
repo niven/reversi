@@ -1,0 +1,49 @@
+<html>
+<head>
+
+<title>Reversi - AI shootout</title>
+
+<script type="text/javascript" src="reversi.js"></script>
+<script type="text/javascript" src="reversi_gui.js"></script>
+<script type="text/javascript" src="ai_shootout.js"></script>
+
+<script type="text/javascript">
+
+var generations = 4;
+
+</script>
+
+
+<style type="text/css">
+
+#log {
+	float: left;
+	border: thick solid lightseagreen;
+	color: lightseagreen;
+	font-weight: bold;
+	margin-left: 5em;
+	padding: 0.2em;
+	overflow-y: auto;
+	height: 80%;
+	width: 30em;	
+}
+
+#log p {
+	padding: 0.2em;
+	margin: 0.1em;
+}
+
+</style>
+    
+</head>
+
+<body onload="load(generations);">
+<p>
+<button onclick="shootout(generations);">Start Shootout</button>
+</p>
+<canvas id="board"></canvas>
+
+<div id="log"></div>
+
+</body>
+</html>

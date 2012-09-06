@@ -2,12 +2,12 @@
     Strategy: MinMax trying to maintain parity, adding in score in the endgame.
     Also: don't prune a lot since that would be bad for parity
  */
-function gen_4_makeMove( state ) {
+function gen_4_makeMove( state, color ) {
 
     var depth = 6; // lookahead depth
     var width = 4; // how many states to keep per level (this is hardly pruning afaict)
 		
-	return minmax( state, depth, width, heuristic_parity );
+	return minmax( state, depth, width, heuristic_parity, color );
 }
 
 /*
@@ -16,8 +16,8 @@ function gen_4_makeMove( state ) {
 */
 function heuristic_parity( state, color ) {
 
-    var aiScore = state.count( state.AIPiece );
-    var playerScore = state.count( state.playerPiece );
+    var aiScore = state.count( color );
+    var playerScore = state.count( other(color) );
     var movesLeft = size*size - (aiScore + playerScore);
     var ahead = aiScore - playerScore;
         

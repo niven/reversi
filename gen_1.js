@@ -4,9 +4,9 @@
     
     This biases towards the edges and especially the corners.
  */
-function gen_1_makeMove( state ) {
+function gen_1_makeMove( state, piece ) {
 
-	var legalMoves = state.getLegalMoves( state.AIPiece );
+	var legalMoves = state.getLegalMoves( piece );
 	
 	// sort by distance to center as x^2+y^2 treating the center as (0,0)
 	var sorted = legalMoves.sort(function(a, b){

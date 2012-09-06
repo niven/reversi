@@ -1,12 +1,12 @@
 /*
     Strategy: Classic MinMax based on the heuristic "difference of pieces" (which I think is not a good one for Reversi)
  */
-function gen_2_makeMove( state ) {
+function gen_2_makeMove( state, piece ) {
 
     var depth = 4; // lookahead depth
     var width = 3; // how many states to keep per level (basically, we prune quite aggressively)
 	
-	return minmax( state, depth, width, heuristic_count );
+	return minmax( state, depth, width, heuristic_count, piece );
 	
 }
 
@@ -26,14 +26,13 @@ var minmax_scoring_function = null;
 	(which considered optimal moves)
 	finally we keep the one that has the highest score (which assumes we both make moves that max score)
 */
-function minmax( state, depth, width, scoring_function ) {
+function minmax( state, depth, width, scoring_function, color ) {
 
     minmax_boardstates_evaluated = 0; // track this for debug
 	minmax_scoring_function = scoring_function;
 	
     var tree = new Node( -1, copy_state(state) );
     var leaves = [ tree ];
-    var color = state.AIPiece;
     
     // expand depth times
     for(var d=0; d<depth; d++) { 
@@ -162,8 +161,6 @@ function heuristic_count( state, color ) {
 function copy_state( state ) {
     
     var copy = new GameState();
-    copy.playerPiece = state.playerPiece;
-    copy.AIPiece = state.AIPiece;
     
     // copy all pieces
     for(var i=0; i<state.squares.length; i++) {
