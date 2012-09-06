@@ -1,0 +1,81 @@
+<html>
+<head>
+
+<title>Reversi</title>
+
+<script type="text/javascript" src="reversi_gui.js"></script>
+<script type="text/javascript" src="reversi.js"></script>
+
+<script type="text/javascript" src="gen_0.js"></script>
+<script type="text/javascript" src="gen_1.js"></script>
+<script type="text/javascript" src="gen_2.js"></script>
+<script type="text/javascript" src="gen_3.js"></script>
+
+<style type="text/css">
+
+#board {
+    border: thin solid maroon;
+    float: left;	
+    background-color: rgb(10,210,10);
+}
+
+#log {
+	float: left;
+	border: thick solid lightseagreen;
+	color: lightseagreen;
+	font-weight: bold;
+	margin-left: 5em;
+	padding: 0.2em;
+	overflow-y: auto;
+	height: 80%;
+	width: 30em;	
+}
+
+#log p {
+	padding: 0.2em;
+	margin: 0.1em;
+}
+
+#visual_log {
+	float: left;
+	border: thick solid powderblue;
+	margin-left: 5em;
+	padding: 0.2em;
+	overflow-y: auto;
+	height: 80%;
+}
+
+#visual_log canvas {
+	margin-left: 10%;
+	border: thin solid powderblue;
+}
+
+</style>
+    
+</head>
+
+<body>
+<div>
+Generation 
+<select id="generation" onchange="log('Computer will play: ' + strategy_description[this.value])">
+	<option value="-1" checked>Choose</option>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+</select>
+(You play Dark and play first)
+</div>
+<p>
+<button onclick="start(document.getElementById('generation').value);">Start</button>
+</p>
+
+
+<canvas id="board"></canvas>
+
+<div id="log"></div>
+
+<div id="visual_log"><p style="text-align: center">Visual Movelog</p></div>
+
+</body>
+</html>
