@@ -364,10 +364,7 @@ GameState.prototype.flipDiscs = function(x, y) {
 GameState.prototype.hasNeighbours = function(x, y) {
 
 	var s = this.squares[x + y*size];
-	var occupiedNeighbours = directions.filter(function(dir){ return s[dir] != null && s[dir].piece != null });
-//	console.log("Occupied NB", occupiedNeighbours, s);
-	return occupiedNeighbours.length > 0;
-
+	return directions.some(function(dir){ return s[dir] != null && s[dir].piece != null });
 }
 
 /*
