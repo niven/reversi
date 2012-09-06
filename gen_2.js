@@ -28,6 +28,7 @@ var minmax_scoring_function = null;
 */
 function minmax( state, depth, width, scoring_function ) {
 
+    minmax_boardstates_evaluated = 0; // track this for debug
 	minmax_scoring_function = scoring_function;
 	
     var tree = new Node( -1, copy_state(state) );
@@ -64,14 +65,18 @@ function minmax( state, depth, width, scoring_function ) {
 
     var selectedMove = bestMoves[ Math.floor(Math.random()*bestMoves.length) ];
 
+    console.log("Evaluated board states: " + minmax_boardstates_evaluated);
+
     return {"x": state.squares[ selectedMove.index ].getX(), "y": state.squares[ selectedMove.index ].getY() };
 }
 
 // take a node and create breadth children for it given its colors turn
+var minmax_boardstates_evaluated = 0; // for debug
 function expand( node, width, color ) {
     
     // simulate the moves
 	var legalMoves = node.state.getLegalMoves( color );
+	minmax_boardstates_evaluated += legalMoves.length;
 //	console.log("Legal moves", legalMoves.map(function(s){  return s.index }) );
 	
 	var scoredMoves = legalMoves.map(function(s){
