@@ -21,16 +21,30 @@ var generations = 4;
 	border: thick solid lightseagreen;
 	color: lightseagreen;
 	font-weight: bold;
-	margin-left: 5em;
+	margin: 0 2em;
 	padding: 0.2em;
 	overflow-y: auto;
 	height: 80%;
-	width: 30em;	
+	width: 20em;	
 }
 
 #log p {
 	padding: 0.2em;
 	margin: 0.1em;
+}
+
+table {
+	margin-left: 2em;
+	border: thin solid black;
+	float: left;
+}
+
+td {
+	border: thin solid black;
+}
+
+canvas {
+	float: left;
 }
 
 </style>
@@ -39,11 +53,14 @@ var generations = 4;
 
 <body onload="load(generations);">
 <p>
-<button onclick="shootout(generations);">Start Shootout</button>
+<button onclick="shootout(generations);">Start Shootout</button><span></span>
 </p>
-<canvas id="board"></canvas>
 
 <div id="log"></div>
+
+<canvas id="board"></canvas>
+
+
 
 </body>
 </html>

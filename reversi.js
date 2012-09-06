@@ -405,7 +405,7 @@ GameState.prototype.moveLeftFor = function(color) {
 	// check for all full
 	var empty = this.squares.filter(function(s){ return s.piece == null } );
 	if( empty.length == 0 ) {
-		log("BOARD FULL");
+		//log("BOARD FULL");
 		return false;
 	}
 
@@ -452,7 +452,7 @@ function AI( generation, piece ) {
 
 AI.prototype.makeMove = function() {
 
-	log(banter[Math.floor(Math.random()*banter.length)]);
+	//log(banter[Math.floor(Math.random()*banter.length)]);
 
 	return strats[ this.generation ]( state, this.piece );
 

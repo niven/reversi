@@ -35,8 +35,8 @@ function BoardGUI(canvas, state) {
 			ctx.restore();
             for(var x=0; x<size; x++){
                 for(var y=0; y<size; y++){
-                    if( state.squares[x + y*size].piece != null ) {
-                        this.canvas.board.paintDisc(x, y, state.squares[x + y*size].piece == piece.dark ? color.dark : color.light);
+                    if( this.state.squares[x + y*size].piece != null ) {
+                        this.canvas.board.paintDisc(x, y, this.state.squares[x + y*size].piece == piece.dark ? color.dark : color.light);
                     }
                 }
             }
