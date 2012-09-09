@@ -287,9 +287,9 @@ GameState.prototype.isLegalMove = function(x, y, pieceColor) {
     	// check if this chain has <othercolor> n times followed by <mycolor>
     	var others = 0;
     	var current;
-    	while( chain.length > 0 ) {
+     	while( chain.length > 0 ) {
     		current = chain.shift();
-    		if( current.piece != null && current.piece != pieceColor ) {
+     		if( current.piece != null && current.piece != pieceColor ) {
     			others++;
     		} else {
     			break;
@@ -315,11 +315,6 @@ GameState.prototype.getLegalMoves = function( color ) {
     
     var empty = state.squares.filter(function(s){ return s.piece == null } );
     
-    // to cut down on all the isLegalMove calls: squares with no neighbours are never legal
-    empty = empty.filter(function(s){ 
-		return this.hasNeighbours( s.getX(), s.getY() );
-    }, this);
-
     return empty.filter(function(s){
         
         return this.isLegalMove( s.getX(), s.getY(), color);
@@ -357,7 +352,15 @@ GameState.prototype.flipDiscs = function(x, y) {
 GameState.prototype.hasNeighbours = function(x, y) {
 
 	var s = this.squares[x + y*size];
-	return directions.some(function(dir){ return s[dir] != null && s[dir].piece != null });
+	for(var d = 0; d<directions.length; d++) {
+		if( s[ directions[d] ] != null && s[ directions[d] ].piece != null ) {
+			return true;
+		}
+	}
+	return false;
+	
+	// Same but very slow:
+	// return directions.some(function(dir){ return s[dir] != null && s[dir].piece != null });
 }
 
 /*
@@ -386,10 +389,10 @@ GameState.prototype.getChain = function(x, y, direction) {
     var current = this.squares[x + y*size];
     
     //console.log("Start chain at " + x + "," + y + ": " + current.index + " in dir " + direction);   
-    while( current != null ) {
+    while( current[direction] != null ) {
         current = current[direction];
         out.push(current);
-    } ;
+    }
     
     return out;
 }

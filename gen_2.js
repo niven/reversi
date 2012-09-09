@@ -65,7 +65,7 @@ function minmax( state, depth, width, scoring_function, color ) {
 
     var selectedMove = bestMoves[ Math.floor(Math.random()*bestMoves.length) ];
 
-//    console.log("Evaluated board states: " + minmax_boardstates_evaluated);
+    console.log("Evaluated board states: " + minmax_boardstates_evaluated);
 //	console.log("bestMoves", bestMoves);
 
     return {"x": state.squares[ selectedMove.index ].getX(), "y": state.squares[ selectedMove.index ].getY() };
