@@ -150,10 +150,10 @@ function doAI() {
 	   	}
 }
 
-var piece = { dark: 1, light: 2 };
+var piece = { dark: -1, light: 1 };
 
 function other( color ) {
-    return color == piece.dark ? piece.light : piece.dark;
+    return -color;
 }
 
 // define the neighbours of each square as compass points
