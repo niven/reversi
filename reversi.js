@@ -258,7 +258,6 @@ GameState.prototype.play = function(x, y, color) {
 }
 
 /*
-
 	Dark must place a piece with the dark side up on the board, 
 	in such a position that there exists at least one straight (horizontal, vertical, or diagonal) 
 	occupied line between the new piece and another dark piece (the ANCHOR), 
@@ -284,7 +283,6 @@ GameState.prototype.isLegalMove = function(x, y, pieceColor) {
     directions.forEach(function(dir){
     
     	var chain = this.getChain(x, y, dir);
-    	chain.shift(); // remove the initial element (where you clicked)
 //    	console.log("Chain for (" + x + "," + y + ") "+ (x + y*size) + "in " + dir + " = " + chain);
     	// check if this chain has <othercolor> n times followed by <mycolor>
     	var others = 0;
@@ -339,7 +337,6 @@ GameState.prototype.flipDiscs = function(x, y) {
     directions.forEach(function(dir){
 	   	var chain = this.getChain(x, y, dir);
   		
- 		chain.shift(); // this is the piece we placed
  		// gather potential flips
  		var discsToFlip = [];
  		while( chain.length > 0 && chain[0].piece != null && chain[0].piece != toColor ) {
@@ -381,17 +378,18 @@ GameState.prototype.dot = function() {
 
 /* 
     Returns all the squares starting from (x,y) in the given direction. 
-    (includes the (x,y) start point   
+    Does *not* include the (x,y) start point   
  */
 GameState.prototype.getChain = function(x, y, direction) {
 
     var out = [];    
     var current = this.squares[x + y*size];
+    
     //console.log("Start chain at " + x + "," + y + ": " + current.index + " in dir " + direction);   
-    do {
-        out.push(current);        
+    while( current != null ) {
         current = current[direction];
-    } while( current != null );
+        out.push(current);
+    } ;
     
     return out;
 }
@@ -401,26 +399,7 @@ GameState.prototype.getChain = function(x, y, direction) {
  */
 GameState.prototype.moveLeftFor = function(color) {
 	
-	// check for all full
-	var empty = this.squares.filter(function(s){ return s.piece == null } );
-	if( empty.length == 0 ) {
-		//log("BOARD FULL");
-		return false;
-	}
-
-	// check if any of the empty squares are valid moves for color
-	while( empty.length > 0 ) {
-	
-		var s = empty.pop();
-		var x = s.index % 8;
-		var y = Math.floor( s.index/8 );
-//		console.log("moveLeftFor " +x + "," +y +": " + s.index);
-		if( this.isLegalMove(x, y, color) ) {
-			return true;
-		}
-	}
-
-    return false;
+	return this.getLegalMoves( color ).length > 0;
 }
 
 /*
