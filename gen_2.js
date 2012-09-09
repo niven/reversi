@@ -23,7 +23,7 @@ var minmax_scoring_function = null;
 	
 	We do this "depth" times.
 	We then propagate scores up the tree: the score of each state is the max of the descending states,
-	(which considered optimal moves)
+	(which are considered optimal moves)
 	finally we keep the one that has the highest score (which assumes we both make moves that max score)
 */
 function minmax( state, depth, width, scoring_function, color ) {
@@ -53,6 +53,7 @@ function minmax( state, depth, width, scoring_function, color ) {
     var sorted = tree.children.sort(function(a, b){
         return a.getScore() - b.getScore();
     });
+
 
     // now pick random move from all the moves that have top score to avoid always doning the same
     // in symmetric scoring board states
@@ -90,11 +91,12 @@ function expand( node, width, color ) {
         // this will keep the score as-is
         scoredMoves.push( nop );
     }
-    
+ 	//console.log("Scores for this move: ", scoredMoves.map(function(s){ return s.getScore(); }) );
+   
     // prune
-    // sort by score
+    // sort by score, descending!
     scoredMoves = scoredMoves.sort(function(a, b){
-        return a.getScore() - b.getScore();
+        return b.getScore() - a.getScore();
     });
     // remove from end until maximum of breadth items is left
     while( scoredMoves.length > width ) {
@@ -102,7 +104,8 @@ function expand( node, width, color ) {
     }
 //    console.log("Result states ", scoredMoves.length);
     node.children = scoredMoves;
-    
+// 	console.log("After sort/prune: ", scoredMoves.map(function(s){ return s.getScore(); }) );
+   
     return scoredMoves;    
 }
 
@@ -112,8 +115,8 @@ function Node( index, state, color ) {
     this.index = index;
     this.state = state;
     this.children = null;
-    this.score = minmax_scoring_function( state, color );
-    
+    this.score = minmax_scoring_function( state, color ) - minmax_scoring_function( state, other(color) );
+
 }
 
 Node.prototype.getScore = function() {

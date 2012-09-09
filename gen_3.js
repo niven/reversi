@@ -29,7 +29,7 @@ function heuristic_location( state, color ) {
 	[9, 10, 11, 12, 13, 14, 15, 17, 25, 33, 41, 49, 14, 22, 30, 38, 46, 54, 50, 51, 52, 53].forEach(function(s){
 		score += state.squares[s].piece == color ? 1 : 0;
 	});
-		
+	
 	return score;
 }
 

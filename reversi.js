@@ -86,7 +86,6 @@ function processClick( clickEvent ) {
 	   	log("AI can't move, passing to you");
 	   	state.playerTurn = true;
 	   } else {
-	   	console.log("Still moves possible");
 	   	window.setTimeout(doAI, 800);	
 	   }
 	   
