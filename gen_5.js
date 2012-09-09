@@ -5,8 +5,8 @@
  */
 function gen_5_makeMove( state, color ) {
 
-    var depth = 3; // lookahead depth
-    var width = 3; // how many states to keep per level (this is hardly pruning afaict)
+    var depth = 4; // lookahead depth
+    var width = 6; // how many states to keep per level (this is hardly pruning afaict)
 		
 	return minmax( state, depth, width, heuristic_constrict, color );
 }
