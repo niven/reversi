@@ -53,7 +53,7 @@ function minmax( state, depth, width, scoring_function, color ) {
     var sorted = tree.children.sort(function(a, b){
         return b.getScore() - a.getScore();
     });
-	console.log("sorted", sorted.map(function(s){return s.getScore(); }));
+//	console.log("sorted", sorted.map(function(s){return s.getScore(); }));
 
     // now pick random move from all the moves that have top score to avoid always doning the same
     // in symmetric scoring board states
@@ -65,8 +65,8 @@ function minmax( state, depth, width, scoring_function, color ) {
 
     var selectedMove = bestMoves[ Math.floor(Math.random()*bestMoves.length) ];
 
-    console.log("Evaluated board states: " + minmax_boardstates_evaluated);
-	console.log("bestMoves", bestMoves);
+//    console.log("Evaluated board states: " + minmax_boardstates_evaluated);
+//	console.log("bestMoves", bestMoves);
 
     return {"x": state.squares[ selectedMove.index ].getX(), "y": state.squares[ selectedMove.index ].getY() };
 }
@@ -98,14 +98,14 @@ function expand( node, width, color ) {
     scoredMoves = scoredMoves.sort(function(a, b){
         return b.getScore() - a.getScore();
     });
- 	console.log("Scores for this move: ", scoredMoves.map(function(s){ return s.getScore(); }) );
+ //	console.log("Scores for this move: ", scoredMoves.map(function(s){ return s.getScore(); }) );
     // remove from end until maximum of breadth items is left
     while( scoredMoves.length > width ) {
         scoredMoves.pop();
     }
 //    console.log("Result states ", scoredMoves.length);
     node.children = scoredMoves;
- 	console.log("After sort/prune: ", scoredMoves.map(function(s){ return s.getScore(); }) );
+// 	console.log("After sort/prune: ", scoredMoves.map(function(s){ return s.getScore(); }) );
    
     return scoredMoves;    
 }
